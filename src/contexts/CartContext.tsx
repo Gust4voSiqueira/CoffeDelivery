@@ -1,21 +1,13 @@
 import { createContext, ReactNode, useReducer, useState } from "react";
 import { Products } from "../database/Products";
-import { addNewProduct, removeProduct } from "../reducers/cart/actions";
-import { cartReducer } from "../reducers/cart/reducer";
-
-interface Product {
-  id: number,
-  image: string,
-  name:  string,
-  description: string,
-  categories: string[],
-  price: number,
-  quantitie: number
-}
+import { addNewProduct, alterQuantitie, removeProduct } from "../reducers/cart/actions";
+import { cartReducer, Product } from "../reducers/cart/reducer";
 
 interface CartContextType {
+  products: Product[],
+  totalValue: number,
   handleAddToCart: (id: number, quantitie: number) => void,
-  // handleAlterQuantitie: (idProduct: number, quantitie: number) => void,
+  handleAlterQuantitie: (idProduct: number, quantitie: number) => void,
   handleRemoveCart: (id: number) => void
 }
 
@@ -28,7 +20,6 @@ interface CartContextProviderProps {
 export function CartContextProvider({
   children,
 }: CartContextProviderProps) {
-  // const [cart, setCart] = useState<Product[]>([])
   const [cartState, dispatch] = useReducer(
     cartReducer,
     {
@@ -36,15 +27,13 @@ export function CartContextProvider({
       totalValue: 0
     },
     () => {
-      const storageStateAsJSON = localStorage.getItem(
-        '@coffe-delivery:cart-state-1.0.0',
-      )
-
-      if (storageStateAsJSON) {
-        return JSON.parse(storageStateAsJSON)
+      return {
+        products: [],
+        totalValue: 0
       }
     }
   )
+  const { products, totalValue } = cartState
 
   function handleAddToCart(id: number, quantitie: number) {
     const productCart = Products.filter(product => product.id === id)
@@ -52,29 +41,23 @@ export function CartContextProvider({
     dispatch(addNewProduct(newProduct))
   }
 
-  // function handleAlterQuantitie(idProduct: number, quantitie: number) {
-  //   const productCart = Products.filter(product => product.id === idProduct) 
-  //   console.log(quantitie);
-       
-
-  //   if(quantitie > 0 && !cart.includes({...productCart[0], quantitie}))  {
-  //     const newProduct = {...productCart[0], quantitie}
-
-  //     setCart(value => {
-  //       return [...value.filter(product => product.id !== idProduct), newProduct]
-  //     })
-  //   }
-  // }
 
   function handleRemoveCart(id: number) {
     dispatch(removeProduct(id))
   }
 
+  function handleAlterQuantitie(idProduct: number, quantitie: number) {
+    dispatch(alterQuantitie(idProduct, quantitie))
+  }
+
   return (
     <CartContext.Provider
       value={{
+        products,
+        totalValue,
         handleAddToCart,
-        handleRemoveCart
+        handleRemoveCart,
+        handleAlterQuantitie
       }}
     >
       {children}

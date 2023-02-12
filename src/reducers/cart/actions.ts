@@ -2,7 +2,8 @@ import { Product } from './reducer'
 
 export enum ActionTypes {
   ADD_NEW_PRODUCT = 'ADD_NEW_PRODUCT',
-  REMOVE_PRODUCT = 'REMOVEPRODUCT'
+  REMOVE_PRODUCT = 'REMOVE_PRODUCT',
+  ALTER_QUANTITIE = 'ALTER_QUANTITIE'
 }
 
 export function addNewProduct(newProduct: Product) {
@@ -17,5 +18,19 @@ export function addNewProduct(newProduct: Product) {
 export function removeProduct(idProduct: number) {
   return {
     type: ActionTypes.REMOVE_PRODUCT,
+    payload: {
+      idProduct,
+    },
   }
 }
+
+export function alterQuantitie(idProduct: number, quantitie: number) {
+  return {
+    type: ActionTypes.ALTER_QUANTITIE,
+    payload: {
+      idProduct,
+      quantitie
+    }
+  }
+}
+

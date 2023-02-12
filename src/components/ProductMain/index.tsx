@@ -14,8 +14,8 @@ interface ProductProps {
 }
 
 export function ProductMain({ id, name, image, description, categories, price, alterQuantitie }: ProductProps) {
-  const { cart, handleRemoveCart, handleAddToCart } = useContext(CartContext)
-  const productToCart = cart.filter(product => product.id === id)
+  const { products, handleRemoveCart, handleAddToCart } = useContext(CartContext)
+  const productToCart = products.filter(product => product.id === id)
   const [quantitie, setQuantitie] = useState<number>(productToCart.length ? productToCart[0].quantitie : 0)
 
   function convertMoney(number: number) {

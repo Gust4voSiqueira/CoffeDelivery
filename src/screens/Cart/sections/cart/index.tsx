@@ -5,22 +5,18 @@ import { ButtonConfirmRequest, CartCard, CompleteOrder, ContQuantitie, InfoProdu
 
 
 export function CartSection() {
-  const { cart, handleRemoveCart, handleAlterQuantitie } = useContext(CartContext)
-  const [totalPrice, setTotalPrice] = useState(cart.map(product => product.price * product.quantitie))
+  const { products, totalValue, handleRemoveCart, handleAlterQuantitie } = useContext(CartContext)
 
   function convertMoney(number: number) {
     return number.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL'
     }).substring(2)
-  }
+  }  
+  
 
   function handleAlterQuantitieCart(id: number, newQuantitie: number) {
     newQuantitie >= 1 ? handleAlterQuantitie(id, newQuantitie) : handleRemoveCart(id)
-  
-    setTotalPrice(cart.map(product => product.price * product.quantitie))
-    console.log(totalPrice);
-    
   }
 
   return (
@@ -28,7 +24,7 @@ export function CartSection() {
           <h4>Cafés selecionados</h4>
 
           <ProductsToCartContainer>
-          {cart.sort((a, b) =>  a.id - b.id).map(productCart => (
+          {products.sort((a, b) =>  a.id - b.id).map(productCart => (
             <CartCard key={productCart.id}> 
               <img src={productCart.image} alt="" />
 
@@ -67,7 +63,7 @@ export function CartSection() {
             <footer>
               <div>
                 <p>Total de itens</p>
-                <span>R$ {totalPrice}</span>
+                <span>R$ {convertMoney(totalValue)}</span>
               </div>
               <div>
                 <p>Entrega</p>
@@ -75,7 +71,7 @@ export function CartSection() {
               </div>
               <div>
                 <h4>Total</h4>
-                <h4>R$ 33,20</h4>
+                <h4>R$ {convertMoney(totalValue + 3.5)}</h4>
               </div>
 
               <ButtonConfirmRequest>

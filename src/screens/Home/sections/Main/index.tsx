@@ -5,7 +5,8 @@ import { Products } from '../../../../database/Products'
 import { CartContext } from "../../../../contexts/CartContext";
 
 export function Main() {
-  const { handleAddToCart, handleAlterQuantitie } = useContext(CartContext)
+  const { products, handleAddToCart, handleAlterQuantitie } = useContext(CartContext)
+  
 
   return (
     <MainContainer>
@@ -22,7 +23,6 @@ export function Main() {
                 categories={product.categories}
                 image={product.image}
                 price={product.price}
-                addCart={handleAddToCart}
                 alterQuantitie={handleAlterQuantitie}
               />
             )
