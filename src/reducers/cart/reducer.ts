@@ -28,7 +28,7 @@ export function cartReducer(state: CartState, action: any) {
       return produce(state, (draft) => {
         if(!state.products.includes(action.payload.newProduct))  {
           draft.products.push(action.payload.newProduct)
-
+          
           draft.totalValue = actualityTotalValue(draft.products)
         }
       })

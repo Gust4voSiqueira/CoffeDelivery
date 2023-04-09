@@ -1,7 +1,7 @@
 import { Minus, Plus, ShoppingCart, Trash } from 'phosphor-react'
 import { useContext, useState } from 'react'
 import { CartContext } from '../../contexts/CartContext'
-import { CartContainer, Categorie, CategoriesContainer, ContQuantitie, PriceContainer, ProductContainer } from './styles'
+import { ButtonCart, Categorie, CategoriesContainer, ContQuantitie, PriceContainer, ProductContainer } from './styles'
 
 interface ProductProps {
   id: number,
@@ -65,9 +65,12 @@ export function ProductMain({ id, name, image, description, categories, price, a
             </button>
           </ContQuantitie>
           
-          <CartContainer onClick={() => handleAddToCart(id, quantitie)}>
-            <ShoppingCart size={20} weight='fill' />
-          </CartContainer>
+          <button onClick={() => handleAddToCart(id, quantitie)}>
+            <ButtonCart>
+              <ShoppingCart size={20} weight='fill' />
+            </ButtonCart>
+            
+          </button>
         </div>
       </PriceContainer>
     </ProductContainer>

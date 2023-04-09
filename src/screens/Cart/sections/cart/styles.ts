@@ -40,7 +40,7 @@ const BaseQuantitie = styled.div`
 `
 
 export const ContQuantitie = styled(BaseQuantitie)`
-  width: 100px;
+  width: 110px;
   
   span {
     font-size: 1.2rem;
@@ -106,17 +106,25 @@ footer {
 }
 `
 
+export const TotalValueContainer = styled.div`
+  display: flex;
+  align-items: end;
+  height: 80px;
+
+  margin-left: 10px;
+
+  h4 {
+    width: 130px;
+    color: ${props => props.theme['gray-800']};
+}
+`
+
 export const CartCard = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   border-bottom: 1px solid ${props => props.theme['gray-300']};
   padding: 20px 0;
-
-  h4 {
-    color: ${props => props.theme['gray-800']};
-}
 `
 
 export const ButtonConfirmRequest  = styled.button`
@@ -128,4 +136,10 @@ export const ButtonConfirmRequest  = styled.button`
   border-radius: 5px;
   margin-top: 15px;
   background-color: ${props => props.theme['yellow-300']};
+  transition: 0.3s;
+
+  :hover {
+    cursor: pointer;
+    background-color: ${props => props.theme['yellow-400']};
+  }
 `

@@ -1,8 +1,7 @@
 import { Minus, Plus, Trash } from "phosphor-react"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { CartContext } from "../../../../contexts/CartContext"
-import { ButtonConfirmRequest, CartCard, CompleteOrder, ContQuantitie, InfoProductsContainer, ProductsToCartContainer, TrashContainer } from "./styles"
-
+import { ButtonConfirmRequest, CartCard, CompleteOrder, ContQuantitie, InfoProductsContainer, ProductsToCartContainer, TotalValueContainer, TrashContainer } from "./styles"
 
 export function CartSection() {
   const { products, totalValue, handleRemoveCart, handleAlterQuantitie } = useContext(CartContext)
@@ -24,7 +23,7 @@ export function CartSection() {
           <h4>Cafés selecionados</h4>
 
           <ProductsToCartContainer>
-          {products.sort((a, b) =>  a.id - b.id).map(productCart => (
+          {products.slice().sort((a, b) => a.id - b.id).map(productCart => (
             <CartCard key={productCart.id}> 
               <img src={productCart.image} alt="" />
 
@@ -55,8 +54,11 @@ export function CartSection() {
                   </TrashContainer>
                 </footer>
               </InfoProductsContainer>
-
-              <h4>R$ {convertMoney(productCart.price * productCart.quantitie)}</h4>
+              
+              <TotalValueContainer>
+                <h4>R$ {convertMoney(productCart.price * productCart.quantitie)}</h4>
+              </TotalValueContainer>
+              
             </CartCard>
           ))}
             

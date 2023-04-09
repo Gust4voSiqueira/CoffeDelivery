@@ -7,7 +7,7 @@ export const FormContainer = styled.section`
 form {
   background-color: ${props => props.theme['gray-200']};
   border-radius: 10px;
-  padding: 30px 50px;
+  padding: 30px 45px;
   margin-top: 15px;
 
   header {
@@ -98,6 +98,16 @@ export const ButtonsPaymentContainer = styled.div`
     font-size: 0.8rem;
     border-radius: 10px;
     color: ${props => props.theme['gray-800']};
+
+    border: 1px solid ${props => props.theme['gray-300']};
+
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: ${props => props.theme['purple-100']};
+    border: 1px solid ${props => props.theme['purple-500']};
+    cursor: pointer;
   }
 `
 

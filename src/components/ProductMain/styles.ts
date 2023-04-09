@@ -94,10 +94,10 @@ export const ContQuantitie = styled.div`
   }
 `
 
-export const CartContainer = styled.button`
+export const ButtonCart = styled.button`
   border-radius: 10px;
-  padding: 10px;
   color: ${props => props.theme['white']};
+  padding: 10px;
 
   margin-left: 10px;
 
@@ -106,4 +106,10 @@ export const CartContainer = styled.button`
   justify-content: center;
 
   background-color: ${props => props.theme['purple-600']};
+  transition: 0.3s;
+
+  :hover {
+    cursor: pointer;
+    background-color: ${props => props.theme['purple-700']};
+  }
 `
