@@ -22,4 +22,3 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Baloo 2';
   }
 `
-

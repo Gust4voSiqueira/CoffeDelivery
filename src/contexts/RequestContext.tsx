@@ -1,13 +1,14 @@
-import { createContext, ReactNode, useContext, useReducer } from "react";
-import { IFormData, IRequest } from "../screens/Cart";
-import { onFinallyRequest } from "../reducers/request/action";
+import { createContext, ReactNode, useReducer } from 'react'
+import { IFormData } from '../ui/screens/Cart'
+import { onFinallyRequest } from '../reducers/request/action'
 
-import { requestReducer } from '../reducers/request/reducer'
-import { Product } from "../reducers/cart/reducer";
+import { IRequest, requestReducer } from '../reducers/request/reducer'
+import { Product } from '../reducers/cart/reducer'
 
 interface RequestContextType {
-  request: IRequest;
+  request: IRequest
   handleConfirmRequest: (formAdress: IFormData, products: Product[]) => void
+  isValidRequest: () => boolean
 }
 
 export const RequestContext = createContext({} as RequestContextType)
@@ -19,16 +20,29 @@ interface RequestContextProviderProps {
 export function RequestContextProvider({
   children,
 }: RequestContextProviderProps) {
-  const [request, dispatch] = useReducer(
-    requestReducer,
-    {
-      adress: { cep: "",  road: "", number: "", complement: "", neighborhood: "", city: "", uf: "", payment: 'NOTSELECTED' },
-      request: [],
-    }
-  )
+  const [request, dispatch] = useReducer(requestReducer, {
+    adress: {
+      cep: '',
+      road: '',
+      number: '',
+      complement: '',
+      neighborhood: '',
+      city: '',
+      uf: '',
+      payment: 'NOTSELECTED',
+    },
+    request: [],
+    isActiveRequest: false,
+  })
 
   function handleConfirmRequest(formAdress: IFormData, products: Product[]) {
     dispatch(onFinallyRequest(formAdress, products))
+  }
+
+  function isValidRequest() {
+    return (
+      request.adress.payment !== 'NOTSELECTED' && request.request.length > 0
+    )
   }
 
   return (
@@ -36,6 +50,7 @@ export function RequestContextProvider({
       value={{
         request,
         handleConfirmRequest,
+        isValidRequest,
       }}
     >
       {children}

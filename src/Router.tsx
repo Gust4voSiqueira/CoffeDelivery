@@ -1,27 +1,16 @@
-import { Routes, Route } from "react-router-dom";
-import { DefaultLayout } from "./layouts/DefaultLayout";
-import { Cart } from "./screens/Cart";
-import { Home } from "./screens/Home";
-import { Success } from "./screens/Success";
-import { useContext } from "react";
-import { RequestContext } from "./contexts/RequestContext";
+import { Routes, Route } from 'react-router-dom'
+import { DefaultLayout } from './layouts/DefaultLayout'
+import { Cart } from './ui/screens/Cart'
+import { Home } from './ui/screens/Home'
+import { Success } from './ui/screens/Success'
 
 export function Router() {
-  const { request } = useContext(RequestContext)
-
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
-        <Route 
-          path="/success" 
-          element={
-            request.adress.city !== '' 
-            ? <Success /> 
-            : <Cart />
-          } 
-        />
+        <Route path="/success" element={<Success />} />
       </Route>
     </Routes>
   )

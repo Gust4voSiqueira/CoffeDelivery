@@ -1,8 +1,8 @@
-import { IFormData } from "../../screens/Cart";
-import { Product } from "../cart/reducer";
+import { IFormData } from '../../ui/screens/Cart'
+import { Product } from '../cart/reducer'
 
 export enum ActionTypesRequest {
-  ON_FINALLY_REQUEST = 'ON_FINALLY_REQUEST',
+  'ON_FINALLY_REQUEST',
 }
 
 export function onFinallyRequest(formAdress: IFormData, cart: Product[]) {
@@ -10,7 +10,7 @@ export function onFinallyRequest(formAdress: IFormData, cart: Product[]) {
     type: ActionTypesRequest.ON_FINALLY_REQUEST,
     payload: {
       formAdress,
-      cart
+      cart,
     },
   }
 }
