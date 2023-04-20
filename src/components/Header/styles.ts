@@ -29,4 +29,23 @@ const BaseButton = styled.button`
   export const ButtonCart = styled(BaseButton)`
   color: ${(props) => props.theme['yellow-900']};
   background-color: ${(props) => props.theme['yellow-100']};
+  position: relative;
+
+  span {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-weight: bold;
+    font-size: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    color: ${(props) => props.theme['white']};
+    background-color: ${(props) => props.theme['yellow-900']};
+  }
 `

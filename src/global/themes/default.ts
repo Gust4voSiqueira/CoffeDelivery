@@ -21,5 +21,7 @@ export const defaultTheme = {
   'gray-900': '#403937',
 
   'black': '#000',
-  'black-100': '#272221'
+  'black-100': '#272221',
+
+  'red-500': '#EA4E14'
 }

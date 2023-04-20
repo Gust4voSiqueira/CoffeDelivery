@@ -1,4 +1,4 @@
-import { ActionTypes } from "./actions";
+import { ActionTypesCart } from "./actions";
 import { produce } from 'immer'
 
 export interface Product {
@@ -11,7 +11,7 @@ export interface Product {
   quantitie: number
 }
 
-interface CartState {
+export interface CartState {
   products: Product[],
   totalValue: number
 }
@@ -24,20 +24,22 @@ export function cartReducer(state: CartState, action: any) {
   }
 
   switch(action.type) {
-    case ActionTypes.ADD_NEW_PRODUCT:
+    case ActionTypesCart.ADD_NEW_PRODUCT:
       return produce(state, (draft) => {
-        if(!state.products.includes(action.payload.newProduct))  {
-          draft.products.push(action.payload.newProduct)
-          
+        const isQuantitie = action.payload.newProduct.quantitie > 0
+        const isExistsProductCart = state.products.some(state => state.id === action.payload.newProduct.id)
+
+        if(!isExistsProductCart && isQuantitie)  {
           draft.totalValue = actualityTotalValue(draft.products)
+          draft.products.push(action.payload.newProduct)
         }
       })
-    case ActionTypes.REMOVE_PRODUCT:
+    case ActionTypesCart.REMOVE_PRODUCT:
       return produce(state, (draft) => {
         draft.products = state.products.filter(product => product.id !== action.payload.idProduct)
         draft.totalValue = actualityTotalValue(draft.products)
       })
-    case ActionTypes.ALTER_QUANTITIE:
+    case ActionTypesCart.ALTER_QUANTITIE:
       return produce(state, (draft) => {
         const { idProduct, quantitie } = action.payload
         const productCart = state.products.filter(product => product.id === idProduct) 

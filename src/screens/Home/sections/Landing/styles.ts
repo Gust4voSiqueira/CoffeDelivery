@@ -22,7 +22,7 @@ h1 {
 
 p {
   font-size: 1.5rem;
-  width: 80%;
+  width: 90%;
   color: ${props => props.theme['gray-900']};
 }
 `
@@ -34,6 +34,7 @@ export const Footer = styled.footer`
 
   margin-top: 70px;
   height: 100px;
+  width: 800px;
 
   font-size: 1.3rem;
   color: ${props => props.theme['gray-800']};
@@ -45,31 +46,10 @@ export const Footer = styled.footer`
     align-items: center;
     margin-bottom: 20px;
   }
-`
 
-const ContainerBase = styled.button`
-  border-radius: 50%;
-  padding: 10px;
-  color: ${props => props.theme['white']};
-
-  margin-right: 10px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-`
-export const CartContainer = styled(ContainerBase)`
-  background-color: ${props => props.theme['yellow-900']};
-`
-
-export const TimerContainer = styled(ContainerBase)`
-  background-color: ${props => props.theme['yellow-300']};
-`
-
-export const PackageContainer = styled(ContainerBase)`
-  background-color: ${props => props.theme['gray-800']};
-`
-
-export const CoffeContainer = styled(ContainerBase)`
-  background-color: ${props => props.theme['purple-500']};
+  p, span {
+  font-size: 1.2rem;
+  width: 100%;
+  color: ${props => props.theme['gray-800']};
+}
 `

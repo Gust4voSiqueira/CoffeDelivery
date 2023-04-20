@@ -33,5 +33,5 @@ justify-content: space-between;
 align-items: center;
 flex-wrap: wrap;
 
-min-height: 150vh;
+min-height: 180vh;
 `

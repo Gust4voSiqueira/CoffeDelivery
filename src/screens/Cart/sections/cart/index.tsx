@@ -1,18 +1,45 @@
 import { Minus, Plus, Trash } from "phosphor-react"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { CartContext } from "../../../../contexts/CartContext"
-import { ButtonConfirmRequest, CartCard, CompleteOrder, ContQuantitie, InfoProductsContainer, ProductsToCartContainer, TotalValueContainer, TrashContainer } from "./styles"
+import { ButtonConfirmRequest, CompleteOrder, InfoProductsContainer, ProductsToCartContainer } from "./styles"
+import { CardProductCart } from "../cardProductCart";
+import { Product } from "../../../../reducers/cart/reducer";
 
-export function CartSection() {
+interface IHandleCardCart {
+  products: Product[];
+  handleAlterQuantitieCart: (id: number, newQuantitie: number) => void;
+  handleRemoveCart: (id: number) => void
+}
+
+function HandleCardCart({ products, handleAlterQuantitieCart, handleRemoveCart }: IHandleCardCart) {
+  return (
+    <div>
+      {
+        products.slice().sort((a, b) => a.id - b.id).map(productCart => (
+          <CardProductCart
+            productCart={productCart}
+            handleAlterQuantitieCart={handleAlterQuantitieCart}
+            handleRemoveCart={handleRemoveCart}
+          />
+        ))
+      }
+    </div>
+  )
+}
+
+interface ICartSection {
+  onConfirmRequest: () => void;
+}
+
+export function convertMoney(number: number) {
+  return number.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL'
+  }).substring(2)
+} 
+
+export function CartSection({ onConfirmRequest }: ICartSection) {
   const { products, totalValue, handleRemoveCart, handleAlterQuantitie } = useContext(CartContext)
-
-  function convertMoney(number: number) {
-    return number.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL'
-    }).substring(2)
-  }  
-  
 
   function handleAlterQuantitieCart(id: number, newQuantitie: number) {
     newQuantitie >= 1 ? handleAlterQuantitie(id, newQuantitie) : handleRemoveCart(id)
@@ -23,45 +50,12 @@ export function CartSection() {
           <h4>Cafés selecionados</h4>
 
           <ProductsToCartContainer>
-          {products.slice().sort((a, b) => a.id - b.id).map(productCart => (
-            <CartCard key={productCart.id}> 
-              <img src={productCart.image} alt="" />
-
-              <InfoProductsContainer>
-                <span>{productCart.name}</span>
-
-                <footer>
-                  <ContQuantitie>
-                    <button onClick={() => handleAlterQuantitieCart(productCart.id, productCart.quantitie - 1)}>
-                      {
-                        productCart.quantitie === 1
-                        ? <Trash size={20} color='#8047F8' />
-                        : <Minus size={15} weight="bold" color='#8047F8' />
-                      }
-                    </button>
-
-                    <span>{productCart.quantitie}</span>
-
-                    <button onClick={() => handleAlterQuantitieCart(productCart.id, productCart.quantitie + 1)}>
-                      <Plus size={15} weight="bold" color='#8047F8' />
-                    </button>
-                    
-                  </ContQuantitie>
-
-                  <TrashContainer onClick={() => handleRemoveCart(productCart.id)}>
-                    <Trash size={20} color='#8047F8' />
-                    <span>REMOVER</span>
-                  </TrashContainer>
-                </footer>
-              </InfoProductsContainer>
-              
-              <TotalValueContainer>
-                <h4>R$ {convertMoney(productCart.price * productCart.quantitie)}</h4>
-              </TotalValueContainer>
-              
-            </CartCard>
-          ))}
-            
+            <HandleCardCart 
+              products={products}
+              handleAlterQuantitieCart={handleAlterQuantitieCart}
+              handleRemoveCart={handleRemoveCart}
+            />
+          
             <footer>
               <div>
                 <p>Total de itens</p>
@@ -76,7 +70,7 @@ export function CartSection() {
                 <h4>R$ {convertMoney(totalValue + 3.5)}</h4>
               </div>
 
-              <ButtonConfirmRequest>
+              <ButtonConfirmRequest onClick={onConfirmRequest}>
                 CONFIRMAR PEDIDO
               </ButtonConfirmRequest>
             </footer>
