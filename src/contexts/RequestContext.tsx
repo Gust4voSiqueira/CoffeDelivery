@@ -1,14 +1,12 @@
 import { createContext, ReactNode, useContext, useReducer } from "react";
 import { IFormData, IRequest } from "../screens/Cart";
-import { onActuallyFormAction, onFinallyRequest } from "../reducers/request/action";
+import { onFinallyRequest } from "../reducers/request/action";
 
 import { requestReducer } from '../reducers/request/reducer'
-import { CartContext } from "./CartContext";
 import { Product } from "../reducers/cart/reducer";
 
 interface RequestContextType {
   request: IRequest;
-  onActuallyForm: (newForm: IFormData) => void;
   handleConfirmRequest: (formAdress: IFormData, products: Product[]) => void
 }
 
@@ -33,16 +31,11 @@ export function RequestContextProvider({
     dispatch(onFinallyRequest(formAdress, products))
   }
 
-  function onActuallyForm(newForm: IFormData) {
-    dispatch(onActuallyFormAction(newForm))
-  }
-
   return (
     <RequestContext.Provider
       value={{
         request,
         handleConfirmRequest,
-        onActuallyForm
       }}
     >
       {children}
